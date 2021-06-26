@@ -25,34 +25,8 @@ tests = [
                ],
     'expected': [('PORTB',0x02)],
     },
-    
-    { # Test 2: Does noP, P, noP, P
-    'description': 'PINA: 0x00, 0x01, 0x00, 0x01 => PORTB: 0x02',
-    'steps': [ {'inputs': [('PINA',0x00)], 'iterations': 3 },
-               {'inputs': [('PINA',0x01)], 'iterations': 3 },
-               {'inputs': [('PINA',0x00)], 'iterations': 3 },
-               {'inputs': [('PINA',0x01)], 'iterations': 3 }
-             ],
-    'expected': [('PORTB',0x02)],
-    },
-
-    { # Test 3: Does P, noP, P
-    'description': 'PINA: 0x01, 0x00, 0x01 => PORTB: 0x01',
-    'steps': [ {'inputs': [('PINA',0x01)], 'iterations': 3 },
-               {'inputs': [('PINA',0x00)], 'iterations': 3 },
-               {'inputs': [('PINA',0x01)], 'iterations': 3 }
-               ],
-    'expected': [('PORTB',0x01)],
-    },
-    
-    { # Test 4: Does noP
-    'description': 'PINA: 0x00 => PORTB: 0x01',
-    'steps': [ {'inputs': [('PINA',0x00)], 'iterations': 3 },
-             ],
-    'expected': [('PORTB',0x01)],
-    },
-
+     
 ]
 
-watch = ['main::change', 'main::tmpA', 'PINA', 'PORTB']
+watch = ['PINA', 'PORTB']
 

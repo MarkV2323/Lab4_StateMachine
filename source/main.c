@@ -1,9 +1,13 @@
 /*	Author: Mark Vincent II
  *  Partner(s) Name: 
  *	Lab Section: A01
- *	Assignment: Lab #4  Exercise #
+ *	Assignment: Lab #4  Exercise #2
  *	Exercise Description:
  *
+ *  Two buttons are connect to pins A0 and A1. Output on PORTC is initially 7.
+ *  Pressing A0 increments PORTC by 1, stopping at 9.
+ *  Pressing A1 decrements PORTC by 1, stopping at 0.
+ *  If both buttons are NOT pressed (0x00), PORTC resets to 0.
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
@@ -17,11 +21,8 @@
 enum States{start, init} state;
 
 // Global Vars
-//DDRA = 0x00; PORTA = 0xFF; // Configure PORTA as input
-//DDRB = 0xFF; PORTB = 0x00; // Configure PORTB as output
-
 unsigned char tmpA = 0x00;
-unsigned char tmpB = 0x00;
+unsigned char tmpC = 0x00;
 
 unsigned char change = 0x00;
 
@@ -60,10 +61,10 @@ int main(void) {
     
     // PORTS
     DDRA = 0x00; PORTA = 0xFF; // Configure PORTA as input
-    DDRB = 0xFF; PORTB = 0x00; // Configure PORTB as output
+    DDRC = 0xFF; PORTC = 0x00; // Configure PORTC as output
 
     // init output
-    tmpB = 0x00;
+    tmpC = 0x07;
 
     // init state
     state = start; 

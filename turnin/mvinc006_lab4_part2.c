@@ -25,7 +25,7 @@ unsigned char tmpA = 0x00;
 unsigned char tmpC = 0x00;
 
 // enum flag
-enum Flags{button1, button2, both, stillOn, none} flag;
+enum Flags{button1, button2, both, stillOn1, stillOn2, stillOn3, none} flag;
 
 // tick function
 void tick() {
@@ -89,17 +89,12 @@ void tick() {
             // Check where to go next
             if (tmpA == 0x00) {
                 // goes to OFF, with flag set to none
-                if (flag == stillOn) {
-                    flag = none;
-                    state = off;
-                } else {
-                    flag = none;
-                    state = off;
-                }
+                flag = none;
+                state = off;
 
             } else if (tmpA == 0x01) {
                 // goes to ON, with flag set to button1
-                if (flag == stillOn) {
+                if (flag == stillOn1) {
                     // nothing
                 } else {
                     flag = button1;
@@ -108,7 +103,7 @@ void tick() {
 
             } else if (tmpA == 0x02) {
                 // goes to ON, with flag set to button2
-                if (flag == stillOn) {
+                if (flag == stillOn2) {
                     // nothing
                 } else {
                     flag = button2;
@@ -117,7 +112,7 @@ void tick() {
 
             } else if (tmpA == 0x03) {
                 // goes to ON, with flag set to both.
-                if (flag == stillOn) {
+                if (flag == stillOn3) {
                     // nothing
                 } else {
                     flag = both;
@@ -154,25 +149,23 @@ void tick() {
                 if (tmpC < 9) {
                     // Does increment
                     tmpC = tmpC + 1;
-                    flag = stillOn;
+                    flag = stillOn1;
                 } else {
                     // Does nothing
-                    flag = stillOn;
                 }
             } else if (flag == button2) {
                 // Does a decrement on PORTC by 1 if PORTC > 0.
                 if (tmpC > 0) {
                     // Does decrement
                     tmpC = tmpC - 1;
-                    flag = stillOn;
+                    flag = stillOn2;
                 } else {
                     // Does nothing
-                    flag = stillOn;
                 }
             } else if (flag == both) {
                 // Resets tmpC to 0x00
                 tmpC = 0x00;
-                flag = stillOn;
+                flag = stillOn3;
             } else {
                 // does nothing
             }

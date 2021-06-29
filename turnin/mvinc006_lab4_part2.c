@@ -25,7 +25,7 @@ unsigned char tmpA = 0x00;
 unsigned char tmpC = 0x00;
 
 // enum flag
-enum Flags{button1, button2, both, none} flag;
+enum Flags{button1, button2, both, stillOn, none} flag;
 
 // tick function
 void tick() {
@@ -89,23 +89,40 @@ void tick() {
             // Check where to go next
             if (tmpA == 0x00) {
                 // goes to OFF, with flag set to none
-                flag = none;
-                state = off;
+                if (flag == stillOn) {
+                    flag = none;
+                    state = off;
+                else {
+                    flag = none;
+                    state = off;
+                }
 
             } else if (tmpA == 0x01) {
                 // goes to ON, with flag set to button1
-                flag = button1;
-                state = on;
+                if (flag == stillOn) {
+                    // nothing
+                } else {
+                    flag = button1;
+                    state = on;
+                }
 
             } else if (tmpA == 0x02) {
                 // goes to ON, with flag set to button2
-                flag = button2;
-                state = on;
+                if (flag == stillOn) {
+                    // nothing
+                } else {
+                    flag = button2;
+                    state = on;
+                }
 
             } else if (tmpA == 0x03) {
                 // goes to ON, with flag set to both.
-                flag = both;
-                state = on;
+                if (flag == stillOn) {
+                    // nothing
+                } else {
+                    flag = both;
+                    state = on;
+                }
             }
              break;
         default:
@@ -137,25 +154,25 @@ void tick() {
                 if (tmpC < 9) {
                     // Does increment
                     tmpC = tmpC + 1;
-                    flag = none;
+                    flag = stillOn;
                 } else {
                     // Does nothing
-                    flag = none;
+                    flag = stillOn;
                 }
             } else if (flag == button2) {
                 // Does a decrement on PORTC by 1 if PORTC > 0.
                 if (tmpC > 0) {
                     // Does decrement
                     tmpC = tmpC - 1;
-                    flag = none;
+                    flag = stillOn;
                 } else {
                     // Does nothing
-                    flag = none;
+                    flag = stillOn;
                 }
             } else if (flag == both) {
                 // Resets tmpC to 0x00
                 tmpC = 0x00;
-                flag = none;
+                flag = stillOn;
             } else {
                 // does nothing
             }

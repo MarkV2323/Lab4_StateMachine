@@ -125,13 +125,10 @@ void tick() {
         case off:
             // Decides whether to increment, decrement or nothing
             if (flag == none) {
-                // Resets PORTC to 0.
-                tmpC = 0x00;
+                // Does nothing.
             } else {
                 // shouldn't be able to get here.
             }
-            // writes output
-            PORTC = tmpC;
             break;
         case on:
             // Decides whether to increment, decrement or nothing
@@ -152,7 +149,8 @@ void tick() {
                     // Does nothing
                 }
             } else if (flag == both) {
-                // Does neither a increment nor decrement.
+                // Resets tmpC to 0x00
+                tmpC = 0x00;
             } else {
                 // shouldn't be able to get here.
             }

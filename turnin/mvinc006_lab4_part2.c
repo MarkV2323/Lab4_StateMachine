@@ -137,22 +137,27 @@ void tick() {
                 if (tmpC < 9) {
                     // Does increment
                     tmpC = tmpC + 1;
+                    flag = none;
                 } else {
                     // Does nothing
+                    flag = none;
                 }
             } else if (flag == button2) {
                 // Does a decrement on PORTC by 1 if PORTC > 0.
                 if (tmpC > 0) {
                     // Does decrement
                     tmpC = tmpC - 1;
+                    flag = none;
                 } else {
                     // Does nothing
+                    flag = none;
                 }
             } else if (flag == both) {
                 // Resets tmpC to 0x00
                 tmpC = 0x00;
+                flag = none;
             } else {
-                // shouldn't be able to get here.
+                // does nothing
             }
             // writes output
             PORTC = tmpC;

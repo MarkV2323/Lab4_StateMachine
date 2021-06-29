@@ -92,7 +92,7 @@ void tick() {
                 if (flag == stillOn) {
                     flag = none;
                     state = off;
-                else {
+                } else {
                     flag = none;
                     state = off;
                 }

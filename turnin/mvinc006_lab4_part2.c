@@ -25,7 +25,7 @@ unsigned char tmpA = 0x00;
 unsigned char tmpC = 0x00;
 
 // enum flag
-enum Flags{button1, button2, both, none} flag;
+enum Flags{button1, button2, both, stillOn1, stillOn2, stillOn3, none} flag;
 
 // tick function
 void tick() {
@@ -94,18 +94,30 @@ void tick() {
 
             } else if (tmpA == 0x01) {
                 // goes to ON, with flag set to button1
-                flag = button1;
-                state = on;
+                if (flag == stillOn1) {
+                    // nothing
+                } else {
+                    flag = button1;
+                    state = on;
+                }
 
             } else if (tmpA == 0x02) {
                 // goes to ON, with flag set to button2
-                flag = button2;
-                state = on;
+                if (flag == stillOn2) {
+                    // nothing
+                } else {
+                    flag = button2;
+                    state = on;
+                }
 
             } else if (tmpA == 0x03) {
                 // goes to ON, with flag set to both.
-                flag = both;
-                state = on;
+                if (flag == stillOn3) {
+                    // nothing
+                } else {
+                    flag = both;
+                    state = on;
+                }
             }
              break;
         default:
@@ -125,13 +137,10 @@ void tick() {
         case off:
             // Decides whether to increment, decrement or nothing
             if (flag == none) {
-                // Resets PORTC to 0.
-                tmpC = 0x00;
+                // Does nothing.
             } else {
                 // shouldn't be able to get here.
             }
-            // writes output
-            PORTC = tmpC;
             break;
         case on:
             // Decides whether to increment, decrement or nothing
@@ -140,6 +149,7 @@ void tick() {
                 if (tmpC < 9) {
                     // Does increment
                     tmpC = tmpC + 1;
+                    flag = stillOn1;
                 } else {
                     // Does nothing
                 }
@@ -148,13 +158,16 @@ void tick() {
                 if (tmpC > 0) {
                     // Does decrement
                     tmpC = tmpC - 1;
+                    flag = stillOn2;
                 } else {
                     // Does nothing
                 }
             } else if (flag == both) {
-                // Does neither a increment nor decrement.
+                // Resets tmpC to 0x00
+                tmpC = 0x00;
+                flag = stillOn3;
             } else {
-                // shouldn't be able to get here.
+                // does nothing
             }
             // writes output
             PORTC = tmpC;
